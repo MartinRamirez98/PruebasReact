@@ -4,8 +4,14 @@ import {
   DropdownToggle, DropdownMenu, DropdownItem, Jumbotron, Label, Alert,
 } from 'reactstrap';
 
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2';
+
+// CommonJS
+//const Swal = require('sweetalert2');
+import SweetAlert from 'sweetalert2-react';
 import Menu from '../Menu/Menu';
-import { BrowserRouter as Router, Switch, Route, Link,Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 
 import Header from './Header';
 import React, { Fragment, Component } from 'react';
@@ -17,9 +23,17 @@ class Login extends Component {
     this.state = {
       user: '',
       pass: '',
-      loginSuccess:0,
+      loginSuccess: 0,
     };
 
+  }
+
+  onShowAlert = () => {
+    this.setState({ visible: true }, () => {
+      window.setTimeout(() => {
+        this.setState({ visible: false })
+      }, 2000)
+    });
   }
 
   handleClick = () => {
@@ -29,10 +43,10 @@ class Login extends Component {
     console.log(pass);
     if (user == "martin123" && pass == "admin") {
       console.log("Entro");
-      this.setState({loginSuccess:1});
+      this.setState({ loginSuccess: 1 });
     } else {
       console.log("No Entro");
-      this.setState({loginSuccess:2});
+      this.setState({ loginSuccess: 2 });
 
     }
   };
@@ -53,13 +67,33 @@ class Login extends Component {
     );
 
   }
- 
-  renderComp=()=>{
-    if(this.state.loginSuccess===1){
-      return(<Redirect to="/menu"></Redirect>);
-    }else if (this.state.loginSuccess===2){
-      return (<Alert color="danger">¡Datos incorrectos!</Alert>);
+
+  renderComp = () => {
+    if (this.state.loginSuccess === 1) {
+      return (<Redirect to="/menu"></Redirect>);
+    } else if (this.state.loginSuccess === 2) {
+      let timerInterval
+      Swal.fire({
+        title: 'Error',
+        html: 'Datos Incorrectos',
+        timer: 700,
+        onBeforeOpen: () => {
+          Swal.showLoading()
+         
+        },
+        onClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.timer
+        ) {
+          console.log('I was closed by the timer')
+        }
+      })
     }
+    this.state.loginSuccess=0;
   }
 
   Home = () => {
@@ -92,13 +126,13 @@ class Login extends Component {
                       <Input type="password" name="password" id="contraseña" onChange={(event) => this.setState({ pass: event.target.value })} placeholder="Ingrese su contraseña"></Input>
                     </Col>
                   </FormGroup>
-                  <Row style={{ paddingTop: 30, paddingBottom:30 }}>
+                  <Row style={{ paddingTop: 30, paddingBottom: 30 }}>
                     <Col sm="5"></Col>
                     <Col sm="2">
                       <Button label="Submit" className="btn-success" primary={true} onClick={this.handleClick}>Submit</Button>
                     </Col>
                   </Row>
-                      {this.renderComp()}
+                  {this.renderComp()}
                 </Form>
               </Jumbotron>
             </Col>
