@@ -74,8 +74,8 @@ class Login extends Component {
     } else if (this.state.loginSuccess === 2) {
       let timerInterval
       Swal.fire({
-        title: 'Error',
-        html: 'Datos Incorrectos',
+        title: 'Datos Incorrectos',
+        html: 'Esto deberia ser una alerta pero weno xd',
         timer: 700,
         onBeforeOpen: () => {
           Swal.showLoading()
