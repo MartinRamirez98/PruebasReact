@@ -5,7 +5,7 @@ import {
 } from 'reactstrap';
 
 import Menu from '../Menu/Menu';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link,Redirect } from 'react-router-dom';
 
 import Header from './Header';
 import React, { Fragment, Component } from 'react';
@@ -17,6 +17,7 @@ class Login extends Component {
     this.state = {
       user: '',
       pass: '',
+      loginSuccess:0,
     };
 
   }
@@ -28,10 +29,11 @@ class Login extends Component {
     console.log(pass);
     if (user == "martin123" && pass == "admin") {
       console.log("Entro");
-      return (<Link to="/menu"></Link>);
+      this.setState({loginSuccess:1});
     } else {
       console.log("No Entro");
-      return (<Alert color="danger">¡Datos incorrectos!</Alert>);
+      this.setState({loginSuccess:2});
+
     }
   };
 
@@ -51,7 +53,14 @@ class Login extends Component {
     );
 
   }
-
+ 
+  renderComp=()=>{
+    if(this.state.loginSuccess===1){
+      return(<Redirect to="/menu"></Redirect>);
+    }else if (this.state.loginSuccess===2){
+      return (<Alert color="danger">¡Datos incorrectos!</Alert>);
+    }
+  }
 
   Home = () => {
     return (
@@ -83,12 +92,13 @@ class Login extends Component {
                       <Input type="password" name="password" id="contraseña" onChange={(event) => this.setState({ pass: event.target.value })} placeholder="Ingrese su contraseña"></Input>
                     </Col>
                   </FormGroup>
-                  <Row style={{ paddingTop: 30 }}>
+                  <Row style={{ paddingTop: 30, paddingBottom:30 }}>
                     <Col sm="5"></Col>
                     <Col sm="2">
                       <Button label="Submit" className="btn-success" primary={true} onClick={this.handleClick}>Submit</Button>
                     </Col>
                   </Row>
+                      {this.renderComp()}
                 </Form>
               </Jumbotron>
             </Col>
