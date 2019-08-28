@@ -1,7 +1,7 @@
 import {
   Container, Row, Col, Form, FormGroup, Input, Button, Navbar, Nav,
   NavbarBrand, NavLink, NavItem, UncontrolledDropdown,
-  DropdownToggle, DropdownMenu, DropdownItem, Jumbotron, Label
+  DropdownToggle, DropdownMenu, DropdownItem, Jumbotron, Label, Alert,
 } from 'reactstrap';
 
 import Menu from '../Menu/Menu';
@@ -12,6 +12,29 @@ import React, { Fragment, Component } from 'react';
 
 class Login extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: '',
+      pass: '',
+    };
+
+  }
+
+  handleClick = () => {
+    const user = this.state.user;
+    const pass = this.state.pass;
+    console.log(user);
+    console.log(pass);
+    if (user == "martin123" && pass == "admin") {
+      console.log("Entro");
+      return (<Link to="/menu"></Link>);
+    } else {
+      console.log("No Entro");
+      return (<Alert color="danger">¡Datos incorrectos!</Alert>);
+    }
+  };
+
   render() {
     let { location } = this.props;
 
@@ -19,7 +42,7 @@ class Login extends Component {
       <Router>
         <div>
           <Switch location={this.props.location}>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={this.Home} />
             <Route path="/menu" component={Menu}></Route>
           </Switch>
         </div>
@@ -28,11 +51,11 @@ class Login extends Component {
     );
 
   }
-}
 
-function Home(){
-  return (
-    
+
+  Home = () => {
+    return (
+
       <Fragment>
         <Header></Header>
         <main className="my-5 py-5">
@@ -51,19 +74,19 @@ function Home(){
                   <FormGroup row>
                     <Label for="usuario" sm={2}>Usuario:</Label>
                     <Col sm='10'>
-                      <Input type="email" name="email" id="usuario" placeholder="Ingrese su usuario"></Input>
+                      <Input type="email" name="email" id="usuario" onChange={(event) => { this.setState({ user: event.target.value }) }} placeholder="Ingrese su usuario"></Input>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
                     <Label for="contraseña" sm={2}>Contraseña:</Label>
                     <Col sm='10'>
-                      <Input type="password" name="password" id="contraseña" placeholder="Ingrese su contraseña"></Input>
+                      <Input type="password" name="password" id="contraseña" onChange={(event) => this.setState({ pass: event.target.value })} placeholder="Ingrese su contraseña"></Input>
                     </Col>
                   </FormGroup>
                   <Row style={{ paddingTop: 30 }}>
                     <Col sm="5"></Col>
                     <Col sm="2">
-                      <Button><Link to="/menu">Submit</Link></Button>
+                      <Button label="Submit" className="btn-success" primary={true} onClick={this.handleClick}>Submit</Button>
                     </Col>
                   </Row>
                 </Form>
@@ -74,8 +97,12 @@ function Home(){
           </Row>
         </main>
       </Fragment>
-    
-  );
+
+    );
+  }
 }
 
+
 export default Login;
+
+/* <Link to="/menu">Submit</Link> */
