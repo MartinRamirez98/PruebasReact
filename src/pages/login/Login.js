@@ -41,7 +41,8 @@ class Login extends Component {
     const pass = this.state.pass;
     console.log(user);
     console.log(pass);
-    if (user == "martin123" && pass == "admin") {
+    //QUE PENDEJO PARA PONER AQUI LAS CLAVES
+    if (user == "arquero123" && pass == "tukachero") {
       console.log("Entro");
       this.setState({ loginSuccess: 1 });
     } else {
@@ -109,7 +110,7 @@ class Login extends Component {
               <Jumbotron>
                 <Row>
                   <Col md="5"></Col>
-                  <Col md="2"><Label style={{ fontSize: 25, paddingBottom: 30 }}><b>LogIn</b></Label></Col>
+                  <Col md="2"><Label style={{ fontSize: 25, paddingBottom: 30 }}><b>NUNCA PONGAS LAS CLAVES EN EL JAVASCRIPT n00b</b></Label></Col>
                   <Col md="5"></Col>
 
                 </Row>
@@ -117,13 +118,13 @@ class Login extends Component {
                   <FormGroup row>
                     <Label for="usuario" sm={2}>Usuario:</Label>
                     <Col sm='10'>
-                      <Input type="email" name="email" id="usuario" onChange={(event) => { this.setState({ user: event.target.value }) }} placeholder="Ingrese su usuario"></Input>
+                      <Input type="email" name="email" id="usuario" onChange={(event) => { this.setState({ user: event.target.value }) }} placeholder="Por favor, ingrese su usuario"></Input>
                     </Col>
                   </FormGroup>
                   <FormGroup row>
                     <Label for="contraseña" sm={2}>Contraseña:</Label>
                     <Col sm='10'>
-                      <Input type="password" name="password" id="contraseña" onChange={(event) => this.setState({ pass: event.target.value })} placeholder="Ingrese su contraseña"></Input>
+                      <Input type="password" name="password" id="contraseña" onChange={(event) => this.setState({ pass: event.target.value })} placeholder="Por favor, ingrese su contraseña"></Input>
                     </Col>
                   </FormGroup>
                   <Row style={{ paddingTop: 30, paddingBottom: 30 }}>
